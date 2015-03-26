@@ -2,7 +2,3 @@ hb_blog:
     resource: "@HBBlogBundle/Controller/"
     type:     annotation
     prefix:   /
-
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
