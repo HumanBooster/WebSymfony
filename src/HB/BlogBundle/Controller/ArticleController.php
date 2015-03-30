@@ -42,7 +42,89 @@ class ArticleController extends Controller
             'entities' => $entities,
         );
     }
+
+    /**
+     * Trouve et affiche un objet Article
+     *
+     * @Route("/{id}", name="article_show")
+     * @Method("GET")
+     * @Template()
+     */
+    public function showAction($id)
+    {
+        // on récupère l'entity manager
+        $em = $this->getDoctrine()->getManager();
+        // on récupère le repository de Article, et on lui demande de 
+        // trouver l'article de l'id demandé
+        $entity = $em->getRepository('HBBlogBundle:Article')->find($id);
+
+        // s'il n'y a pas d'article pour cette id, on lève une exception NotFound
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Article entity.');
+        }
+
+        // on génère le formulaire de suppression pour l'afficher dans la page
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
     
+    /**
+     * Affiche un formulaire pour créer un nouvel article
+     *
+     * @Route("/new", name="article_new")
+     * @Method("GET")
+     * @Template()
+     */
+    public function newAction()
+    {
+        // on crée un nouvel objet article vierge
+        $entity = new Article();
+        // on génère un formulaire à partir de cet article
+        $form   = $this->createCreateForm($entity);
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
+    }
+
+    /**
+     * Affiche un formulaire d'édition pour l'article correspondant à l'id 
+     *
+     * @Route("/{id}/edit", name="article_edit")
+     * @Method("GET")
+     * @Template()
+     */
+    public function editAction($id)
+    {
+        //on vérifie d'abord que l'article demandé existe
+        // on récupère l'entity manager
+        $em = $this->getDoctrine()->getManager();
+        // on récupère le repository de Article, et on lui demande de 
+        // trouver l'article de l'id demandé
+        $entity = $em->getRepository('HBBlogBundle:Article')->find($id);
+
+        // s'il n'existe pas, on lève une exception NotFound
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Article entity.');
+        }
+
+        // on créé les formulaire d'édition et de suppression
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        // on passe à la vue l'article et les deux vues des formulaires
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
     /**
      * Récupère la Request et gère la soumission d'un formulaire de 
      * création d'un article
@@ -86,140 +168,7 @@ class ArticleController extends Controller
             'form'   => $form->createView(),
         );
     }
-
-    /**
-     * Génére un formulaire HTML pour créer un nouvel article
-     * Cette méthode est privée et n'a pas de route, on l'appelle
-     * depuis le controller
-     *
-     * @param Article $entity L'entité article
-     *
-     * @return \Symfony\Component\Form\Form Le formulaire de création d'article
-     */
-    private function createCreateForm(Article $entity)
-    {
-        // on créé un formulaire à partir d'un nouvel ArticleType
-        // on lui passe un objet article pour le préremplir
-        // puis un tableau d'option
-        $form = $this->createForm(new ArticleType(), $entity, array(
-            'action' => $this->generateUrl('article_create'),
-            'method' => 'POST',
-        ));
-
-        // on ajoute un bouton pour soumettre le formulaire
-        $form->add('submit', 'submit', 
-                array('label' => 'Create',
-                      // permet d'ajouter une classe à la balise html
-                      'attr' => array( 'class' => 'btn')
-            ));
-
-        return $form;
-    }
-
-    /**
-     * Affiche un formulaire pour créer un nouvel article
-     *
-     * @Route("/new", name="article_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        // on crée un nouvel objet article vierge
-        $entity = new Article();
-        // on génère un formulaire à partir de cet article
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Trouve et affiche un objet Article
-     *
-     * @Route("/{id}", name="article_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        // on récupère l'entity manager
-        $em = $this->getDoctrine()->getManager();
-        // on récupère le repository de Article, et on lui demande de 
-        // trouver l'article de l'id demandé
-        $entity = $em->getRepository('HBBlogBundle:Article')->find($id);
-
-        // s'il n'y a pas d'article pour cette id, on lève une exception NotFound
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Article entity.');
-        }
-
-        // on génère le formulaire de suppression pour l'afficher dans la page
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Affiche un formulaire d'édition pour l'article correspondant à l'id 
-     *
-     * @Route("/{id}/edit", name="article_edit")
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-        //on vérifie d'abord que l'article demandé existe
-        // on récupère l'entity manager
-        $em = $this->getDoctrine()->getManager();
-        // on récupère le repository de Article, et on lui demande de 
-        // trouver l'article de l'id demandé
-        $entity = $em->getRepository('HBBlogBundle:Article')->find($id);
-
-        // s'il n'existe pas, on lève une exception NotFound
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Article entity.');
-        }
-
-        // on créé les formulaire d'édition et de suppression
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        // on passe à la vue l'article et les deux vues des formulaires
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Créé un formulaire d'édition d'un article
-    *
-    * @param Article $entity L'entité article
-    *
-    * @return \Symfony\Component\Form\Form Le formulaire 
-    */
-    private function createEditForm(Article $entity)
-    {
-        // on créé un formulaire à partir d'un nouvel ArticleType
-        // on lui passe un objet article pour le préremplir
-        // puis un tableau d'option
-        $form = $this->createForm(new ArticleType(), $entity, array(
-            'action' => $this->generateUrl('article_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        // on ajoute le bouton submit
-        $form->add('submit', 'submit', array('label' => 'Update', 'attr' => array('class'=>'btn')));
-
-        return $form;
-    }
+    
     /**
      * Permet de traiter la soumission d'un formulaire pour éditer un article existant
      *
@@ -261,6 +210,7 @@ class ArticleController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Traite le formulaire de suppression d'article
      *
@@ -291,6 +241,58 @@ class ArticleController extends Controller
 
         // on redirige vers la liste
         return $this->redirect($this->generateUrl('article'));
+    }
+
+    /**
+     * Génére un formulaire HTML pour créer un nouvel article
+     * Cette méthode est privée et n'a pas de route, on l'appelle
+     * depuis le controller
+     *
+     * @param Article $entity L'entité article
+     *
+     * @return \Symfony\Component\Form\Form Le formulaire de création d'article
+     */
+    private function createCreateForm(Article $entity)
+    {
+        // on créé un formulaire à partir d'un nouvel ArticleType
+        // on lui passe un objet article pour le préremplir
+        // puis un tableau d'option
+        $form = $this->createForm(new ArticleType(), $entity, array(
+            'action' => $this->generateUrl('article_create'),
+            'method' => 'POST',
+        ));
+
+        // on ajoute un bouton pour soumettre le formulaire
+        $form->add('submit', 'submit', 
+                array('label' => 'Create',
+                      // permet d'ajouter une classe à la balise html
+                      'attr' => array( 'class' => 'btn')
+            ));
+
+        return $form;
+    }
+    
+    /**
+    * Créé un formulaire d'édition d'un article
+    *
+    * @param Article $entity L'entité article
+    *
+    * @return \Symfony\Component\Form\Form Le formulaire 
+    */
+    private function createEditForm(Article $entity)
+    {
+        // on créé un formulaire à partir d'un nouvel ArticleType
+        // on lui passe un objet article pour le préremplir
+        // puis un tableau d'option
+        $form = $this->createForm(new ArticleType(), $entity, array(
+            'action' => $this->generateUrl('article_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
+
+        // on ajoute le bouton submit
+        $form->add('submit', 'submit', array('label' => 'Update', 'attr' => array('class'=>'btn')));
+
+        return $form;
     }
 
     /**
