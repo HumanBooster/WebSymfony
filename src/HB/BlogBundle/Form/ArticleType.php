@@ -24,6 +24,7 @@ class ArticleType extends AbstractType
             ->add('enabled', 'checkbox', array('required' => false))
             ->add('author', 'entity', array('class' => 'HBBlogBundle:User',
                                             'property' => 'nameLogin'))
+                //->add('author', new UserType())
         ;
     }
     
