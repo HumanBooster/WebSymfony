@@ -71,6 +71,14 @@ class Article
     private $enabled;
     
     /**
+     *
+     * @var User
+     * 
+     * @ORM\ManyToOne(targetEntity="User") 
+     */
+    private $author;
+    
+    /**
      * Get id
      *
      * @return integer 

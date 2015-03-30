@@ -18,7 +18,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/demo/{name}")
+     * @Route("/hello/{name}")
      * @Template()
      */
     public function helloAction($name)

@@ -1,5 +1,7 @@
 {% extends '::base.html.twig' %}
 
+{% block title %}{{ parent() }} - {{ entity.title }} {% endblock %}
+
 {% block body -%}
     <h1>Article</h1>
 
@@ -54,3 +56,5 @@
     <li>{{ form(delete_form) }}</li>
 </ul>
 {% endblock %}
+
+
