@@ -45,7 +45,7 @@ class Article
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="lastEditDate", type="datetime")
+     * @ORM\Column(name="lastEditDate", type="datetime", nullable=true)
      */
     private $lastEditDate;
 
@@ -78,7 +78,14 @@ class Article
      */
     private $author;
     
-    /**
+    public function __construct() {
+        //  valeur par défaut (notamment pour le formulaire)
+        $this->creationDate = new \DateTime();
+        $this->publishDate = new \DateTime();
+        $this->enabled = true;
+    }
+
+        /**
      * Get id
      *
      * @return integer 
@@ -247,5 +254,28 @@ class Article
     public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * Set author
+     *
+     * @param \HB\BlogBundle\Entity\User $author
+     * @return Article
+     */
+    public function setAuthor(\HB\BlogBundle\Entity\User $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \HB\BlogBundle\Entity\User 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }
