@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h2>Administration du Blog</h2>
+
+    {% block leftcolumn %}
+        {{ render(controller("HBBlogBundle:Article:recents", {"number": 3})) }}
+    {% endblock %} 
+
+    {% block content %}{% endblock %}
+
+{% endblock %}

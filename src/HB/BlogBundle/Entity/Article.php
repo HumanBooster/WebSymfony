@@ -3,6 +3,7 @@
 namespace HB\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Article
@@ -25,6 +26,9 @@ class Article
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\Length(min=3, max=250, 
+     *          minMessage="Le titre doit faire au moins 3 caractères.",
+     *          maxMessage="Le titre doit faire moins de 250 caractères.")
      */
     private $title;
 
@@ -32,6 +36,8 @@ class Article
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\Length(min=3, 
+     *          minMessage="Le contenu doit faire au moins 3 caractères.")
      */
     private $content;
 
@@ -39,6 +45,7 @@ class Article
      * @var \DateTime
      *
      * @ORM\Column(name="creationDate", type="datetime")
+     * @Assert\DateTime()
      */
     private $creationDate;
 
@@ -46,6 +53,7 @@ class Article
      * @var \DateTime
      *
      * @ORM\Column(name="lastEditDate", type="datetime", nullable=true)
+     * @Assert\DateTime()
      */
     private $lastEditDate;
 
@@ -53,6 +61,7 @@ class Article
      * @var \DateTime
      *
      * @ORM\Column(name="publishDate", type="datetime")
+     * @Assert\DateTime()
      */
     private $publishDate;
 

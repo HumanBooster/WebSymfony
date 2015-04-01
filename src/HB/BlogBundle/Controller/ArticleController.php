@@ -42,7 +42,52 @@ class ArticleController extends Controller
             'entities' => $entities,
         );
     }
+    
+    /**
+     * Liste tous les articles
+     *
+     * Route("/recents/{number}", name="article_recents")
+     * Method("GET")
+     * @Template()
+     */
+    public function recentsAction($number)
+    {
+        // on récupère l'entity manager à l'aide du service Doctrine
+        $em = $this->getDoctrine()->getManager();
 
+        // on récupère le repository de Article et on lui demande 
+        // tous les articles
+        $entities = $em->getRepository('HBBlogBundle:Article')->findAll();
+
+        // on transmet la liste d'article au template en la nommant entities
+        return array(
+            'entities' => $entities,
+            'number' => $number
+        );
+    }
+
+  
+    /**
+     * Affiche un formulaire pour créer un nouvel article
+     *
+     * @Route("/new", name="article_new")
+     * @Method("GET")
+     * @Template()
+     */
+    public function newAction()
+    {
+        // on crée un nouvel objet article vierge
+        $entity = new Article();
+        // on génère un formulaire à partir de cet article
+        $form   = $this->createCreateForm($entity);
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
+    }
+
+    
     /**
      * Trouve et affiche un objet Article
      *
@@ -71,27 +116,7 @@ class ArticleController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
-    
-    /**
-     * Affiche un formulaire pour créer un nouvel article
-     *
-     * @Route("/new", name="article_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        // on crée un nouvel objet article vierge
-        $entity = new Article();
-        // on génère un formulaire à partir de cet article
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
+  
     /**
      * Affiche un formulaire d'édition pour l'article correspondant à l'id 
      *
@@ -157,7 +182,8 @@ class ArticleController extends Controller
             $em->flush();
 
             // on redirige vers l'url générée à partir du nom de la route
-            return $this->redirect($this->generateUrl('article_show', array('id' => $entity->getId())));
+            return $this->redirect(
+                    $this->generateUrl('article_show', array('id' => $entity->getId())));
         }
 
         // si le formulaire est invalide, on renvoie le formulaire qui 
