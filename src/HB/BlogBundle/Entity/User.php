@@ -66,7 +66,7 @@ class User
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="lastEditDate", type="datetime")
+     * @ORM\Column(name="lastEditDate", type="datetime", nullable=true)
      */
     private $lastEditDate;
 
@@ -292,6 +292,8 @@ class User
      */
     public function __construct()
     {
+        $this->creationDate = new \DateTime();
+        $this->enabled = true;
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
