@@ -87,6 +87,14 @@ class Article
      */
     private $author;
     
+    /**
+     *
+     * @var Image
+     * 
+     * @ORM\OneToOne(targetEntity="Image", cascade="persist")
+     */
+    private $banner;
+    
     public function __construct() {
         //  valeur par défaut (notamment pour le formulaire)
         $this->creationDate = new \DateTime();
@@ -286,5 +294,28 @@ class Article
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set banner
+     *
+     * @param \HB\BlogBundle\Entity\Image $banner
+     * @return Article
+     */
+    public function setBanner(\HB\BlogBundle\Entity\Image $banner = null)
+    {
+        $this->banner = $banner;
+
+        return $this;
+    }
+
+    /**
+     * Get banner
+     *
+     * @return \HB\BlogBundle\Entity\Image 
+     */
+    public function getBanner()
+    {
+        return $this->banner;
     }
 }
