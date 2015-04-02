@@ -13,8 +13,11 @@ security:
                 property: login
 
     firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
         mon_pare_feu:
             pattern: ^/
-            anonymous: ~
             form_login: ~
             logout: ~
+            anonymous: ~

@@ -76,6 +76,9 @@ class ArticleController extends Controller
      */
     public function newAction()
     {
+        if (!$this->get('security.context')->isGranted("ROLE_USER"))
+            return $this->redirect ($this->generateUrl("home"));
+        
         // on crée un nouvel objet article vierge
         $entity = new Article();
         // on génère un formulaire à partir de cet article
