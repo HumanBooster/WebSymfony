@@ -3,6 +3,10 @@
 {% block content -%}
     <h1>Article creation</h1>
 
+    {# <form action="{{ path('article_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+    </form> #}
+    
     {{ form(form) }}
 
         <ul class="record_actions">

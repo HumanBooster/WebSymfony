@@ -17,7 +17,7 @@ class ImageType extends AbstractType
         $builder
             ->add('title', 'text')
             ->add('alt', 'text')
-            ->add('url', 'text')
+            ->add('file', 'file', array("required" => false))
         ;
     }
     

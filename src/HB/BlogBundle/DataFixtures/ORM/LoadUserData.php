@@ -37,6 +37,15 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         
         $manager->persist($user2);
         
+        $user3 = new User();
+        $user3->setLogin("test");
+        $user3->setPassword("pwd");
+        $user3->setName("Admin");
+        $user3->setBirthDate(new \DateTime("05/15/1985"));
+        $user3->setEmail("padmin@domaine.com");
+        
+        $manager->persist($user3);
+        
         // on pousse en base
         $manager->flush();
         

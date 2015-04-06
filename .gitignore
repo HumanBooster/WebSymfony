@@ -12,3 +12,4 @@
 /composer.phar
 /nbproject/
 *.php~
+/web/uploads/

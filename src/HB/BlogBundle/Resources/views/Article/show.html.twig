@@ -45,6 +45,10 @@
                 <th>Nom et login de l'auteur</th>
                 <td>{{ entity.author.nameLogin }}</td>
             </tr>
+            <tr>
+                <th>Bannière</th>
+                <td><img src="{{ asset("uploads/images/" ~ entity.banner.url) }}" alt="{{ entity.banner.alt }}" /></td>
+            </tr>
         </tbody>
     </table>
 
