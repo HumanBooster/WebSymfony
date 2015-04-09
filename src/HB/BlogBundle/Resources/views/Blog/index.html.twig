@@ -10,8 +10,8 @@
             </p>
             <p class="article_extrait">
                 
-                    {% if article.content|length > 50 %}
-                       {{ article.content|slice(0, 50)~'...' }}
+                    {% if article.content|length > article_max_length %}
+                       {{ article.content|slice(0, article_max_length)~'...' }}
                        <a href ="">Lire la suite</a>
                     {% else %}
                         {{ article.content }}
@@ -20,6 +20,18 @@
         </article>    
 
     {% endfor %}   
-
-    {{ dump(articles) }}
+    
+    <nav id="pagination">
+        {% if lienPagePrecedente is not null %}
+        <a href="{{ lienPagePrecedente }}"><< page précédente</a>
+        {% endif %}
+        {% if lienPagePrecedente is not null and lienPageSuivante is not null %}
+            --
+        {% endif %}
+        {% if lienPageSuivante is not null %}
+        <a href="{{ lienPageSuivante }}">page suivante >></a>
+        {% endif %}
+    </nav>
+    
+    {{ dump(countPages) }}
 {% endblock %}
