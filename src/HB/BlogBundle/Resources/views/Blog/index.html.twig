@@ -1,0 +1,25 @@
+{# empty Twig template #}
+{% extends 'HBBlogBundle::layout.html.twig' %}
+
+{% block content -%}
+    {% for article in articles %}
+        <article class="article">
+            <h1>{{ article.title }}</h1>
+            <p class="article_infos">
+                ajouté le {{ article.creationDate|date('d/m/Y') }} par {{ article.author.name }}
+            </p>
+            <p class="article_extrait">
+                
+                    {% if article.content|length > 50 %}
+                       {{ article.content|slice(0, 50)~'...' }}
+                       <a href ="">Lire la suite</a>
+                    {% else %}
+                        {{ article.content }}
+                    {% endif %}
+            </p>
+        </article>    
+
+    {% endfor %}   
+
+    {{ dump(articles) }}
+{% endblock %}
