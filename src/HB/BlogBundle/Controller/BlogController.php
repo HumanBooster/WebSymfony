@@ -23,11 +23,11 @@ class BlogController extends Controller
         
         // evite de déborder par en bas
         if ($page < 1)
-            return $this->redirect($this->generateUrl ("blog_index"));
+            return $this->redirectToRoute("blog_index");
 
         // evite de déborder par en haut
         if ($page > $countPages)
-            return $this->redirect($this->generateUrl ("blog_index_page", array("page" => $countPages)));
+            return $this->redirectToRoute("blog_index_page", array("page" => $countPages));
                 
         // les articles de la page d'accueil
         $articles = $repo->getHomepageArticles($page-1);
