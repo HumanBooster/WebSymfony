@@ -1,0 +1,54 @@
+{# empty Twig template #}
+{% extends 'HBBlogBundle::layout.html.twig' %}
+
+{% block content -%}
+<<<<<<< HEAD
+    {% for article in articles %}
+        <article class="article">
+            <h1>{{ article.title }}</h1>
+            <p class="article_infos">
+                ajouté le {{ article.creationDate|date('d/m/Y') }} par {{ article.author.name }}
+            </p>
+            <p class="article_extrait">
+                
+                    {% if article.content|length > article_max_length %}
+                       {{ article.content|slice(0, article_max_length)~'...' }}
+                       <a href ="">Lire la suite</a>
+                    {% else %}
+                        {{ article.content }}
+                    {% endif %}
+            </p>
+        </article>    
+
+    {% endfor %}   
+    
+    <nav id="pagination">
+        {% if lienPagePrecedente is not null %}
+        <a href="{{ lienPagePrecedente }}"><< page précédente</a>
+        {% endif %}
+        {% if lienPagePrecedente is not null and lienPageSuivante is not null %}
+            --
+        {% endif %}
+        {% if lienPageSuivante is not null %}
+        <a href="{{ lienPageSuivante }}">page suivante >></a>
+        {% endif %}
+    </nav>
+    
+    {{ dump(countPages) }}
+=======
+
+   
+{# table body #}
+{% for article in pagination %}
+<article>
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.content }}</p>
+</article>
+{% endfor %}
+
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+>>>>>>> paginator
+{% endblock %}
