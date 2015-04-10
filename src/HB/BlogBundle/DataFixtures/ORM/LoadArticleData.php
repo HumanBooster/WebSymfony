@@ -23,13 +23,17 @@ class LoadArticleData extends AbstractFixture implements OrderedFixtureInterface
         $user1 = $this->getReference("user1");
         $user2 = $this->getReference("user2");
         
-        $article = new Article();
-        $article->setTitle("Un article de test");
-        $article->setContent("Ce magnifique article a été généré par les DoctrineFixtures");
-        $article->setPublished(true);
-        $article->setAuthor($user1);
+        for ($i = 0; $i< 100; $i++) {
 
-        $manager->persist($article);
+            $article = new Article();
+            $article->setTitle("Un article de test" .$i);
+            $article->setContent("Ce magnifique article a été généré par les DoctrineFixtures");
+            $article->setPublished(true);
+            $article->setAuthor($user1);
+
+            $manager->persist($article);
+
+        }
         
         $article2 = new Article();
         $article2->setTitle("Un 2nd article de test");

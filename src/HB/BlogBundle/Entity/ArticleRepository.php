@@ -16,11 +16,12 @@ class ArticleRepository extends EntityRepository
     /**
      * Renvoie les articles pour la page d'accueil
      */
-    public function getHomepageArticles() {
+    public function getHomepageArticles($limit = null) {
 
         return $this->findBy(
                     array('published' => true, 'enabled' => true),
-                    array('publishDate' => 'desc')
+                    array('publishDate' => 'desc'),
+                    $limit
                         );
     }
     

@@ -27,9 +27,9 @@ class BlogController extends Controller {
         $pagination = $paginator->paginate(
                 $articles, // liste des articles ou query
                 $page, // numéro de page
-                2 // nombre d'élements par page
+                20 // nombre d'élements par page
         );
-        //$pagination->setUsedRoute("blog_index_page");
+        $pagination->setUsedRoute("blog_index_page");
         
         return array(
             'pagination' => $pagination
