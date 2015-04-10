@@ -1,6 +1,6 @@
 <?php
 
-namespace HB\BlogBundle\Entity;
+namespace HB\UserBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
