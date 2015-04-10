@@ -19,7 +19,7 @@ class BlogController extends Controller {
         $repo = $em->getRepository('HBBlogBundle:Article');
         // on récupère le repository de Article et on lui demande 
 
-        $articles = $repo->getHomepageArticles();
+        $articles = $repo->getHomepageArticles(10);
 
         // on récupère le service paginator
         $paginator = $this->get('knp_paginator');
