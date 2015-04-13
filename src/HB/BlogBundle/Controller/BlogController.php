@@ -10,6 +10,7 @@ class BlogController extends Controller {
 
     /**
      * @Route("/", name="blog_index")
+     * @Route("/", name="home")
      * @Route("/page/{page}", name="blog_index_page")
      * @Template()
      */
