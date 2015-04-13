@@ -6,7 +6,7 @@
         <article class="article">
             <h1>{{ article.title }}</h1>
             <p class="article_infos">
-                ajouté le {{ article.creationDate|date('d/m/Y') }} par {{ article.author.name }}
+                ajouté le {{ article.creationDate|date('d/m/Y') }} par {{ article.author.username }}
             </p>
             <p class="article_extrait">
 
@@ -26,4 +26,64 @@
     <div class="navigation">
         {{ knp_pagination_render(pagination) }}
     </div>
+        
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {# <script src="{{ asset("bundles/hbblog/js/homepage.js") }}"></script> #}
+    <script>
+        $(function() {
+
+
+
+            $("article.article").hover(
+                function(){
+                    $(this).animate({
+                            borderWidth: "10px",
+                            backgroundColor: "lightSalmon"
+                        }, 500);
+                },
+                function(){
+                    $(this).animate({
+                            borderWidth: "1px",
+                            backgroundColor: "lightGrey"
+                        }, 500);
+                }
+            );
+
+        });
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .article {
+            border: 1px solid lightgrey;
+            margin-bottom: 6px;
+            padding: 6px;
+            background: #fff;
+            
+        }
+        
+        .article h1 {
+            line-height: 0.8em;
+        }
+        
+        .article p.article_infos {
+            font-style: italic;
+            font-size: 0.8em;
+        }
+        
+        .article_actif {
+            border: 10px solid darkgrey!important;
+            background-color: lightsalmon!important;
+        }
+        .article_actif h1 {
+            color: darkgoldenrod;
+        }
+        
+    </style>
 {% endblock %}
