@@ -96,6 +96,14 @@ class Article
      */
     private $banner;
     
+    /**
+     *
+     * @var string
+     * 
+     * @ORM\Column(name="slug", type="string", length=255)
+     */
+    private $slug;
+    
     public function __construct() {
         //  valeur par défaut (notamment pour le formulaire)
         $this->creationDate = new \DateTime();
@@ -318,5 +326,28 @@ class Article
     public function getBanner()
     {
         return $this->banner;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Article
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
