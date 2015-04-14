@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use HB\BlogBundle\Entity\Article;
+
 class BlogController extends Controller {
 
     /**
@@ -41,13 +43,7 @@ class BlogController extends Controller {
      * @Route("/blog/{slug}", name="blog_article_slug")
      * @Template()
      */
-    public function showAction($slug = "") {
-        // on récupère l'entity manager à l'aide du service Doctrine
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository('HBBlogBundle:Article');
-        // on récupère le repository de Article et on lui demande 
-
-        $article = $repo->findOneBy(array("slug" => $slug));
+    public function showAction(Article $article) {
 
         return array(
             'article' => $article

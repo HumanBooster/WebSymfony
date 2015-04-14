@@ -1,70 +1,19 @@
 {% extends 'HBBlogBundle::layout.html.twig' %}
 
 
-{% block title %}{{ parent() }} - {{ entity.title }} {% endblock %}
+{% block title %}{{ parent() }} - {{ article.title }} {% endblock %}
 
 
-{% block content -%}
-    <h1>Article</h1>
+{% block content -%}<h2>Affichage de l'article {{ article.id }}</h2>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ entity.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ entity.content }}</td>
-            </tr>
-            <tr>
-                <th>Creationdate</th>
-                <td>{{ entity.creationDate|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Lasteditdate</th>
-                <td>{{ entity.lastEditDate|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Publishdate</th>
-                <td>{{ entity.publishDate|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Published</th>
-                <td>{{ entity.published }}</td>
-            </tr>
-            <tr>
-                <th>Enabled</th>
-                <td>{{ entity.enabled }}</td>
-            </tr>
-            <tr>
-                <th>Nom et login de l'auteur</th>
-                <td>{{ entity.author.username }}</td>
-            </tr>
-            <tr>
-                <th>Bannière</th>
-                <td><img src="{{ asset("uploads/images/" ~ entity.banner.url) }}" alt="{{ entity.banner.alt }}" /></td>
-            </tr>
-        </tbody>
-    </table>
+<h1>{{ article.title }}</h1>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('article') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('article_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+<p>{{ article.content }}</p>
+
+<p><a href="{{ path('article_list') }}">Retour à la liste</a></p>
+<p><a href="{{ path('article_edit',{'id':article.id}) }}">éditer</a>
+- <a href="{{ path('article_delete',{'id':article.id}) }}">supprimer</a></p>
+
 {% endblock %}
 
 
