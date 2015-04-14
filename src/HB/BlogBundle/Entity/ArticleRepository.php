@@ -12,13 +12,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
-
-    /**
-     *
-     * @var int nombre d'articles par page 
-     */
-    private $limit = 2;
-
     
     /**
      * Renvoie les articles pour la page d'accueil

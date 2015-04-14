@@ -20,7 +20,7 @@ class BlogController extends Controller {
         $repo = $em->getRepository('HBBlogBundle:Article');
         // on récupère le repository de Article et on lui demande 
 
-        $articles = $repo->getHomepageArticles(10);
+        $articles = $repo->getHomepageArticles();
 
         // on récupère le service paginator
         $paginator = $this->get('knp_paginator');
@@ -34,6 +34,23 @@ class BlogController extends Controller {
         
         return array(
             'pagination' => $pagination
+        );
+    }
+    
+    /**
+     * @Route("/blog/{slug}", name="blog_article_slug")
+     * @Template()
+     */
+    public function showAction($slug = "") {
+        // on récupère l'entity manager à l'aide du service Doctrine
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('HBBlogBundle:Article');
+        // on récupère le repository de Article et on lui demande 
+
+        $article = $repo->findOneBy(array("slug" => $slug));
+
+        return array(
+            'article' => $article
         );
     }
 

@@ -49,9 +49,6 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         
         $userManager->updateUser($user2);
         
-  
-
-        
         // on sotcke dans le repository des fixtures, les objets à partager
         $this->addReference('user1', $user);
         $this->addReference('user2', $user2);

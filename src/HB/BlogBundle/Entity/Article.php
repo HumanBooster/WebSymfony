@@ -100,7 +100,7 @@ class Article
      *
      * @var string
      * 
-     * @ORM\Column(name="slug", type="string", length=255)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     private $slug;
     

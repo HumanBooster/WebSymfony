@@ -12,7 +12,7 @@
 
                 {% if article.content|length > article_max_length %}
                     {{ article.content|slice(0, article_max_length)~'...' }}
-                    <a href ="">Lire la suite</a>
+                    <a href ="{{ path("blog_article_slug", { slug: article.slug }) }}">Lire la suite</a>
                 {% else %}
                     {{ article.content }}
                 {% endif %}

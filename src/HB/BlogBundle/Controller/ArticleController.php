@@ -76,8 +76,8 @@ class ArticleController extends Controller
      */
     public function newAction()
     {
-        if (!$this->get('security.context')->isGranted("ROLE_USER"))
-            return $this->redirect ($this->generateUrl("home"));
+        /*if (!$this->get('security.context')->isGranted("ROLE_USER"))
+            return $this->redirect ($this->generateUrl("home"));*/
         
         // on crée un nouvel objet article vierge
         $entity = new Article();
@@ -174,6 +174,14 @@ class ArticleController extends Controller
         // vérifier les données saisies, et de remplir notre
         // objet article $entity
         $form->handleRequest($request);
+        
+        if ($entity->getSlug()=="") {
+            
+            $slugger = $this->get('hb_blog.slugger');
+            
+            $slug = $slugger->getSlug((int)$entity->getId() . ' ' . $entity->getTitle());
+            $entity->setSlug($slug);
+        }
 
         // si le formulaire est valide, on insère en base
         if ($form->isValid()) {
@@ -181,7 +189,8 @@ class ArticleController extends Controller
             $em = $this->getDoctrine()->getManager();
             
             // on déclenche l'upload
-            $entity->getBanner()->upload();
+            if ($entity->getBanner())
+                $entity->getBanner()->upload();
             
             // on persiste l'entité dans le manager
             $em->persist($entity);
