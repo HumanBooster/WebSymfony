@@ -26,6 +26,7 @@ class ArticleType extends AbstractType
                                             'property' => 'username'))
             ->add('banner', new ImageType())
             ->add('slug', 'text', array("required" => false))
+            ->add('submit', 'submit')
         ;
     }
     

@@ -3,11 +3,18 @@
 {% block body %}
 <h2>Layout Blog</h2>
 
+    <section id="left">
     {% block leftcolumn %}
-      {#   {{ render(controller("HBBlogBundle:Article:recents", {"number": 3})) }} #}
-      
+        <div id="recent_articles">
+         {# {{ render(controller("HBBlogBundle:Article:recents", {"number": 3})) }} #}
+        </div>
+        <hr>
+        <div id="search">
+         {{ render(controller("HBBlogBundle:Blog:search")) }} 
+        </div>
     {% endblock %} 
-
+    </section>
+    
     {% block content %}{% endblock %}
 
 {% endblock %}

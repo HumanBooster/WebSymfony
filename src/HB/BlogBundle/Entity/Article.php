@@ -81,10 +81,9 @@ class Article
     
     /**
      *
-     * @var User
+     * @var HB\UserBundle\Entity\User
      * 
-     * ORM\ManyToOne(targetEntity="User", inversedBy="articles") 
-     * @ORM\ManyToOne(targetEntity="HB\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="HB\UserBundle\Entity\User", inversedBy="articles")
      */
     private $author;
     
@@ -93,6 +92,7 @@ class Article
      * @var Image
      * 
      * @ORM\OneToOne(targetEntity="Image", cascade="persist")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $banner;
     

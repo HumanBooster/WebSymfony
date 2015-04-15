@@ -50,4 +50,11 @@ class BlogController extends Controller {
         );
     }
 
+    /**
+     * 
+     * @Template()
+     */
+    public function searchAction() {
+        return array();
+    }
 }

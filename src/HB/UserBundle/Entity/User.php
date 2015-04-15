@@ -22,4 +22,63 @@ class User extends BaseUser
      */
     protected $id;
 
+    
+    /**
+     *
+     * @var User
+     * 
+     * @ORM\OneToMany(targetEntity="HB\BlogBundle\Entity\Article", mappedBy="author")
+     */
+    private $articles;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::_construct();
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add articles
+     *
+     * @param \HB\BlogBundle\Entity\Article $articles
+     * @return User
+     */
+    public function addArticle(\HB\BlogBundle\Entity\Article $articles)
+    {
+        $this->articles[] = $articles;
+
+        return $this;
+    }
+
+    /**
+     * Remove articles
+     *
+     * @param \HB\BlogBundle\Entity\Article $articles
+     */
+    public function removeArticle(\HB\BlogBundle\Entity\Article $articles)
+    {
+        $this->articles->removeElement($articles);
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
 }

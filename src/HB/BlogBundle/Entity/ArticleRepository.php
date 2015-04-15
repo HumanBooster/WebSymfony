@@ -25,4 +25,19 @@ class ArticleRepository extends EntityRepository
                     $limit
                         );
     }
+    
+    public function getArticlesSearch($str, $limit = 10) {
+
+        
+                return $this->createQueryBuilder("a")
+                        ->select("a.id", "a.title", "a.content", "a.slug")
+                        ->where('a.published = 1')
+                        ->andWhere('a.enabled = 1')
+                        ->andWhere('a.title LIKE :title')
+                        ->orderBy('a.title', 'asc')
+                        ->setParameter("title", "%".$str."%")
+                        ->setMaxResults($limit)
+                        ->getQuery()->getResult();
+                        
+    }
 }

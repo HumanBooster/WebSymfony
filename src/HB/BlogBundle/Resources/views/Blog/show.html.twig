@@ -47,6 +47,14 @@
             </tr>
         </tbody>
     </table>
+            
+            {% if article.banner.url is defined %}
+                
+               <img src="{{ asset("uploads/images/"~article.banner.url) }}" alt="{{ article.banner.alt }}" title="{{ article.banner.title }}" />
+               
+            {% endif %}
+                
+                {{ dump(article) }}
 {% endblock %}
 
 

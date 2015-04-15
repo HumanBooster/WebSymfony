@@ -10,7 +10,9 @@
 
 <p>{{ article.content }}</p>
 
-<p><a href="{{ path('article_list') }}">Retour à la liste</a></p>
+<p><a href="{{ path('blog_article_slug', { slug: article.slug }) }}">voir en public</a></p>
+
+<p><a href="{{ path('article') }}">Retour à la liste</a></p>
 <p><a href="{{ path('article_edit',{'id':article.id}) }}">éditer</a>
 - <a href="{{ path('article_delete',{'id':article.id}) }}">supprimer</a></p>
 

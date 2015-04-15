@@ -1,0 +1,45 @@
+{# empty Twig template #}
+
+<input type="text" id="search" />
+<div id="result"></div>
+<div id="result_list"></div>
+<script>
+    $(document).ready(function() {
+       
+        
+        $("#search").on("change", function() {
+            
+            var str = $("input#search").val();
+            var url = "/article/search/"+str;
+            alert(url);
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                cache: false,
+                data: { limit: 50 },
+                success: function (data, status, jqXHR) {
+                    showList(data, status);
+                },
+
+                error: function (jqXHR, status) {
+                    showError(status + JSON.stringify(jqXHR));
+                }
+            });
+        });
+    });
+    
+    function showList(data, status) {
+	  $("#result").html(status);
+	  $("#result_list").empty();
+	  $("#result_list").append($("<ul/>"));
+	  $.each(data, function(id, article) {
+	    var li = $('<li id="item_'+id+'">['+id+'] '+article.id+' - '+article.title+'</li>');
+	    $("#result_list ul").append(li);
+	  });
+    }
+    
+    function showError(status) {
+	$("#result").html(status);
+    }
+</script>

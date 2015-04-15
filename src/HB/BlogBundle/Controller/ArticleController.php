@@ -9,6 +9,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use HB\BlogBundle\Entity\Article;
 use HB\BlogBundle\Form\ArticleType;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Controleur Article permet de faire un CRUDL sur Article
@@ -61,6 +66,27 @@ class ArticleController extends Controller {
             'entities' => $entities,
             'number' => $number
         );
+    }
+
+    /**
+     * Renvoie un tableau json pour les articles correspondants au pattern fourni
+     * 
+     * @Route("/search/{str}", name="article_search_json")
+     * 
+     * @param string $str pattern de recherche
+     */
+    public function ajaxSearch($str) {
+        $em = $this->getDoctrine()->getEntityManager();
+        $repo = $em->getRepository("HBBlogBundle:Article");
+        $articles = $repo->getArticlesSearch($str);
+
+       /* $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+
+        return new Response($serializer->serialize($articles, 'json'));*/
+        return new Response(json_encode($articles));
     }
 
     /**
@@ -129,7 +155,7 @@ class ArticleController extends Controller {
 
                 // On redirige vers la page de visualisation de l'article nouvellement créé
                 return $this->redirect(
-                                $this->generateUrl('article_read', array('id' => $article->getId()))
+                                $this->generateUrl('article_show', array('id' => $article->getId()))
                 );
             }
         }

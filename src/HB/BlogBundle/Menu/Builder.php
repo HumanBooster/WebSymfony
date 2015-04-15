@@ -29,8 +29,8 @@ class Builder extends ContainerAware
         
         foreach ($articles as $article) {
             $menu['Derniers articles']->addChild($article->getTitle(), array(
-                'route' => 'article_show',
-                'routeParameters' => array('id' => $article->getId())
+                'route' => 'blog_article_slug',
+                'routeParameters' => array('slug' => $article->getSlug())
             ));
         }
         /*
