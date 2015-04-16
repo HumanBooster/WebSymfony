@@ -1,17 +1,64 @@
 {# empty Twig template #}
+<style>
+   
+    section {
+        display: block;
+    }
+    #result_list {
+        background: #fff;
+        margin: 0;
+        border: 1px solid #ccc;
+        position:relative;
+        top:0px;
+        left: 250px;
+        padding: 6px;
+        display: none;
+    }
+    
+    #result_list ul {
+        position:relative;
+        margin: 0;
+        padding: 0;
+    }
+    
+    #result_list li {
+        position:relative;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    #search_box {
+        float: left;
+        margin: 10px;
+        height: 50px;
+    }
+    
+    #search {
+        display: block;
+        float: left;
+    }
+    
+    .clear {
+        clear: both;
+    }
 
-<input type="text" id="search" />
-<div id="result"></div>
-<div id="result_list"></div>
+</style>
+<div id="search_box">
+    <!-- <div id="result"></div> -->
+    <input type="text" id="search" />
+    <div id="result_list"></div>
+</div>
+
+<hr class="clear">
 <script>
     $(document).ready(function() {
        
         
-        $("#search").on("change", function() {
+        $("#search").on("input", function() {
             
             var str = $("input#search").val();
-            var url = "/article/search/"+str;
-            alert(url);
+            var url = "/app_dev.php/article/search/"+str;
             $.ajax({
                 type: "GET",
                 url: url,
@@ -23,23 +70,31 @@
                 },
 
                 error: function (jqXHR, status) {
-                    showError(status + JSON.stringify(jqXHR));
+                    showError(status);
                 }
             });
         });
     });
     
     function showList(data, status) {
-	  $("#result").html(status);
-	  $("#result_list").empty();
-	  $("#result_list").append($("<ul/>"));
-	  $.each(data, function(id, article) {
-	    var li = $('<li id="item_'+id+'">['+id+'] '+article.id+' - '+article.title+'</li>');
-	    $("#result_list ul").append(li);
-	  });
+        //$("#result").html(status);
+        $("#result_list").show();
+        $("#result_list").empty();
+        if (data.length>0) {
+            $("#result_list").append($("<ul/>"));
+            $.each(data, function(id, article) {
+              //var li = $('<li id="item_'+id+'">['+id+'] '+article.id+' - '+article.title+'</li>');
+              var url = "{{ path('blog_article_slug', { slug: "slug" }) }}";
+              url = url.replace("slug", article.slug);
+              var li = $('<li id="item_'+id+'"><a href="'+url+'">'+article.title+'</a></li>');
+              $("#result_list ul").append(li);
+            });
+        } else {
+            $("#result_list").html("Aucun article trouvé");
+        }
     }
     
     function showError(status) {
-	$("#result").html(status);
+	//$("#result").html(status);
     }
 </script>

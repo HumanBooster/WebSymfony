@@ -8,13 +8,11 @@
         <div id="recent_articles">
          {# {{ render(controller("HBBlogBundle:Article:recents", {"number": 3})) }} #}
         </div>
-        <hr>
-        <div id="search">
+        <hr>     
          {{ render(controller("HBBlogBundle:Blog:search")) }} 
-        </div>
     {% endblock %} 
     </section>
-    
+    <section id="content">
     {% block content %}{% endblock %}
-
+    </section>
 {% endblock %}
