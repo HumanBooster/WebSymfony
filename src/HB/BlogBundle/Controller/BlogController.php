@@ -51,6 +51,9 @@ class BlogController extends Controller {
     }
 
     /**
+     * Fournit le widget de recherche d'article avec autocomplétion, le code est dans le template.
+     * 
+     * Le code qui fournit les résultats est dans ArticleController:ajaxSearch
      * 
      * @Template()
      */
